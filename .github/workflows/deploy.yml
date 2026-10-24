@@ -46,7 +46,7 @@ jobs:
       - name: Setup HashiCorp Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: "1.10.5"
+          terraform_version: "1.16.6"
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
       # Step 5: Initialize Terraform with HCP Terraform remote backend
