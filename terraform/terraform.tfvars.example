@@ -1,0 +1,23 @@
+# ==============================================================================
+# Example Terraform Variables Configuration File
+# Copy this file to 'terraform.tfvars' and supply your actual Cloudflare values.
+# NEVER commit the real 'terraform.tfvars' file to version control.
+# ==============================================================================
+
+# Your 32-character hexadecimal Cloudflare Account ID
+# Found on Cloudflare Dashboard: Overview / Workers & D1 / Account Details
+account_id = "0123456789abcdef0123456789abcdef"
+
+# Desired Worker name
+worker_name = "student-task-manager"
+
+# Workers KV namespace title
+kv_namespace_name = "student_tasks"
+
+# Deployment environment: 'production', 'staging', or 'development'
+environment = "production"
+
+# Your account's workers.dev subdomain prefix (optional, for output URL formatting)
+# Example: if your worker URL is https://student-task-manager.john-doe.workers.dev, set "john-doe"
+workers_subdomain = "your-subdomain"
+
