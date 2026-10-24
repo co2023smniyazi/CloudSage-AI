@@ -8,7 +8,7 @@ terraform {
 
   # HCP Terraform (Terraform Cloud) Remote State Backend
   cloud {
-    organization = "saim niyazi "
+    organization = "saim"
 
     workspaces {
       name = "student-task-manager"
