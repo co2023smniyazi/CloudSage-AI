@@ -19,8 +19,10 @@ jobs:
         shell: bash
 
     env:
+      TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       TF_VAR_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      TF_VAR_workers_subdomain: "co-2023-smniyazi"
       TF_IN_AUTOMATION: "true"
 
     steps:
@@ -41,14 +43,13 @@ jobs:
           node scripts/build.js
 
       # Step 4: Setup Terraform CLI
-      # If TF_API_TOKEN is provided as a secret, configure credentials for HCP Terraform remote state
       - name: Setup HashiCorp Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: "1.10.5"
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
-      # Step 5: Initialize Terraform with remote backend / provider plugins
+      # Step 5: Initialize Terraform with HCP Terraform remote backend
       - name: Terraform Init
         working-directory: terraform
         run: |
@@ -70,17 +71,18 @@ jobs:
       - name: Terraform Plan
         working-directory: terraform
         run: |
-          terraform plan -input=false -no-color -out=tfplan
+          terraform plan -input=false -no-color
 
-      # Step 9: Apply infrastructure changes automatically
+      # Step 9: Apply infrastructure changes automatically (only on push to main)
       - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         working-directory: terraform
         run: |
-          terraform apply -auto-approve -input=false tfplan
+          terraform apply -auto-approve -input=false
 
       # Step 10: Display deployment outputs (Application URL, Worker Name, KV ID)
       - name: Display Terraform Outputs
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         working-directory: terraform
         run: |
           terraform output -no-color
-

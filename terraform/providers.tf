@@ -6,6 +6,15 @@
 terraform {
   required_version = ">= 1.5.0"
 
+  # HCP Terraform (Terraform Cloud) Remote State Backend
+  cloud {
+    organization = "ORG_NAME"
+
+    workspaces {
+      name = "student-task-manager"
+    }
+  }
+
   # Official Cloudflare Terraform Provider pinned to v5.x release
   required_providers {
     cloudflare = {
@@ -13,20 +22,6 @@ terraform {
       version = "~> 5.0"
     }
   }
-
-  # ----------------------------------------------------------------------------
-  # Remote State Backend: HCP Terraform (Terraform Cloud)
-  # Ephemeral CI/CD runners (like GitHub Actions) do not persist local state.
-  # Remote backend ensures team collaboration, state locking, and durability.
-  # Workspace execution mode must be set to "local" so runners execute commands.
-  # ----------------------------------------------------------------------------
-  # Note: To enable remote state, uncomment this block and set your HCP organization:
-  # cloud {
-  #   organization = "your-hcp-organization-name"
-  #   workspaces {
-  #     name = "student-task-manager-iac"
-  #   }
-  # }
 }
 
 # Cloudflare Provider configuration
