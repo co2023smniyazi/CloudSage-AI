@@ -1,0 +1,86 @@
+name: "CI/CD - Build & Deploy Serverless Student Task Manager"
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    name: "Build Application & Provision Infrastructure"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      TF_VAR_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      TF_IN_AUTOMATION: "true"
+
+    steps:
+      # Step 1: Checkout Git repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js runtime for asset bundling
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache-dependency-path: ""
+
+      # Step 3: Run bundling script to inline SPA into dist/worker.js
+      - name: Build Application Bundle (Inlining Frontend)
+        run: |
+          node scripts/build.js
+
+      # Step 4: Setup Terraform CLI
+      # If TF_API_TOKEN is provided as a secret, configure credentials for HCP Terraform remote state
+      - name: Setup HashiCorp Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.10.5"
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      # Step 5: Initialize Terraform with remote backend / provider plugins
+      - name: Terraform Init
+        working-directory: terraform
+        run: |
+          terraform init
+
+      # Step 6: Verify canonical formatting style
+      - name: Terraform Format Check
+        working-directory: terraform
+        run: |
+          terraform fmt -check
+
+      # Step 7: Validate Terraform syntax and schema constraints
+      - name: Terraform Validate
+        working-directory: terraform
+        run: |
+          terraform validate -no-color
+
+      # Step 8: Generate speculative execution plan
+      - name: Terraform Plan
+        working-directory: terraform
+        run: |
+          terraform plan -input=false -no-color -out=tfplan
+
+      # Step 9: Apply infrastructure changes automatically
+      - name: Terraform Apply
+        working-directory: terraform
+        run: |
+          terraform apply -auto-approve -input=false tfplan
+
+      # Step 10: Display deployment outputs (Application URL, Worker Name, KV ID)
+      - name: Display Terraform Outputs
+        working-directory: terraform
+        run: |
+          terraform output -no-color
+
