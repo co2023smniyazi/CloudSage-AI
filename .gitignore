@@ -3,14 +3,17 @@
 # Security First: Prevent credential leakage and ephemeral artifact commits
 # ==============================================================================
 
+# Terraform Plan binary files
+tfplan
+*.tfplan
+
 # Terraform State files (contain sensitive infrastructure metadata and outputs)
 *.tfstate
 *.tfstate.*
 *.tfstate.backup
 
-# Terraform runtime cache & crash logs
+# Terraform runtime cache & crash logs (note: .terraform.lock.hcl is NOT ignored and is committed)
 .terraform/
-.terraform.lock.hcl
 crash.log
 crash.*.log
 
@@ -42,4 +45,3 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
-
