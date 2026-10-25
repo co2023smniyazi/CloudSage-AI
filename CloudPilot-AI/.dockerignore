@@ -1,0 +1,12 @@
+.git
+.github
+backend/venv
+backend/__pycache__
+backend/.pytest_cache
+*.db
+cloudpilot.db
+frontend/node_modules
+frontend/dist
+.env
+.env.*
+

@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: cloudpilot-ai
+    runtime: docker
+    dockerfilePath: Dockerfile
+    dockerContext: .
+    plan: free
+    region: oregon
+    envVars:
+      - key: PORT
+        value: 8000
