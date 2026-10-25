@@ -1,0 +1,17 @@
+2026-10-25T14:10:02.102Z [kubelet] INFO Starting container web-api-7b89d4c88-x2p9f in pod default/web-api
+2026-10-25T14:10:04.341Z [web-api] INFO [server] Server listening on 0.0.0.0:8080 with worker concurrency 8
+2026-10-25T14:10:15.512Z [web-api] INFO [request] GET /healthz 200 OK 2ms
+2026-10-25T14:10:30.884Z [web-api] INFO [request] POST /v1/batch/process-report Content-Length: 48MB
+2026-10-25T14:10:32.115Z [web-api] WARN [worker-3] Memory allocation high: current usage 480MB / limit 512MB
+2026-10-25T14:10:33.402Z [web-api] ERROR [worker-3] Java heap space / Node buffer allocation failure: unable to allocate 64MB buffer
+2026-10-25T14:10:33.910Z [kernel] CRITICAL cgroup-v2 memory limit exceeded: Task [node] in /kubepods.slice killed by OOM-killer (exit code 137)
+2026-10-25T14:10:34.001Z [kubelet] CRITICAL Container web-api in pod web-api-7b89d4c88-x2p9f terminated with exit code 137 (OOMKilled)
+2026-10-25T14:10:34.120Z [kubelet] WARN Back-off 10s restarting failed container web-api in pod web-api-7b89d4c88-x2p9f
+2026-10-25T14:10:45.002Z [kubelet] INFO Restarting container web-api-7b89d4c88-x2p9f (Restart count: 1)
+2026-10-25T14:10:48.330Z [web-api] INFO [server] Server listening on 0.0.0.0:8080
+2026-10-25T14:10:55.100Z [web-api] ERROR [worker-1] Segmentation fault while unmarshalling payload
+2026-10-25T14:10:55.320Z [kubelet] CRITICAL Container web-api terminated unexpectedly with exit code 137
+2026-10-25T14:10:55.500Z [kubelet] ERROR Pod web-api-7b89d4c88-x2p9f entered CrashLoopBackOff: back-off 40s restarting failed container
+2026-10-25T14:11:00.120Z [ingress-nginx] ERROR 502 Bad Gateway while connecting to upstream default/web-api-7b89d4c88-x2p9f:8080
+2026-10-25T14:11:05.412Z [ingress-nginx] ERROR 502 Bad Gateway no live upstream endpoints available for service web-api
+

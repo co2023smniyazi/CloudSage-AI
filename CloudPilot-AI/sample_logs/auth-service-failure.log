@@ -1,0 +1,11 @@
+2026-10-25T16:15:00.001Z [api-gateway] INFO [router] Ingress dispatch: GET /api/v2/user/profile client_ip=192.168.1.42
+2026-10-25T16:15:02.120Z [api-gateway] INFO [auth] Forwarding JWT validation token to auth-service:8081
+2026-10-25T16:15:07.125Z [api-gateway] WARN [auth] JWT validation request to auth-service timed out after 5000ms. Retrying attempt 1/3...
+2026-10-25T16:15:12.130Z [api-gateway] WARN [auth] JWT validation request to auth-service timed out after 5000ms. Retrying attempt 2/3...
+2026-10-25T16:15:17.135Z [api-gateway] ERROR [auth] Max retry attempts exceeded. Auth-service upstream unavailable: 504 Gateway Timeout
+2026-10-25T16:15:18.001Z [api-gateway] ERROR [circuit-breaker] Circuit breaker for auth-service tripped to OPEN state (failure threshold 60% exceeded)
+2026-10-25T16:15:19.450Z [auth-service] CRITICAL [jwks] Failed to fetch JWKS public key certificates: connection refused to https://idp.internal/keys
+2026-10-25T16:15:20.100Z [api-gateway] ERROR 504 Gateway Timeout returned to client_ip=192.168.1.42
+2026-10-25T16:15:21.050Z [api-gateway] ERROR 504 Gateway Timeout returned to client_ip=192.168.1.55
+2026-10-25T16:15:22.310Z [api-gateway] ERROR 504 Gateway Timeout returned to client_ip=192.168.1.78
+

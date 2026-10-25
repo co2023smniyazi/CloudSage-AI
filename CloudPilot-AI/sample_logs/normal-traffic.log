@@ -1,0 +1,10 @@
+2026-10-25T17:00:01.002Z [ingress-nginx] INFO 192.168.1.10 - - "GET / HTTP/1.1" 200 4521 "-" "Mozilla/5.0" 0.004
+2026-10-25T17:00:02.110Z [web-api] INFO [metrics] Reported telemetry ping to Datadog agent: 24 metrics pushed
+2026-10-25T17:00:05.420Z [web-api] INFO [scheduler] Executed cron job 'cache-refresh' successfully in 12ms
+2026-10-25T17:00:10.015Z [ingress-nginx] INFO 192.168.1.15 - - "POST /v1/search HTTP/1.1" 200 1204 "-" "curl/8.4" 0.012
+2026-10-25T17:00:15.800Z [auth-service] INFO [session] Verified JWT session for user usr_941029: valid until 2026-10-25T18:00:00Z
+2026-10-25T17:00:20.100Z [postgres] INFO checkpoint starting: time
+2026-10-25T17:00:21.050Z [postgres] INFO checkpoint complete: wrote 42 buffers (0.2%); 0 WAL file(s) added, 0 removed
+2026-10-25T17:00:25.320Z [kubelet] INFO Liveness probe for web-api-7b89d4c88-x2p9f succeeded (HTTP 200)
+2026-10-25T17:00:30.001Z [web-api] INFO [worker-1] Heartbeat ACK: memory usage 142MB / 512MB (27% load)
+
